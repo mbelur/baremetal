@@ -44,3 +44,5 @@ data:
   IRONIC_USE_MARIADB: "true"
   LISTEN_ALL_INTERFACES: "true"
   IRONIC_KERNEL_PARAMS: console=ttyS0
+  MARIADB_URL_IRONIC: "127.0.0.1/ironic"
+  MARIADB_URL_IRONIC_INSPECTOR: "127.0.0.1/ironic_inspector"

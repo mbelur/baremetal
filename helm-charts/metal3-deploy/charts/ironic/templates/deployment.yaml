@@ -140,17 +140,19 @@ spec:
            {{- end }} 
           {{- end }}
       {{- end }}    
-      {{- end }}    
+      {{- end }}
    
       volumes:
       {{- range .Values.volumes }}
       - name: {{ .name }}
+        {{- if .persistentVolumeClaim }}
+        persistentVolumeClaim:
+          claimName: {{ .persistentVolumeClaim.claimName }}
+        {{- end }}
         {{- if .configMapName }}
         configMap:
           defaultMode: 493
           name : {{ .configMapName }}
-        {{- else }}
-        emptyDir: {}
         {{- end }}
       {{- end -}}
       {{- if eq $tlssource "secrets" }}
