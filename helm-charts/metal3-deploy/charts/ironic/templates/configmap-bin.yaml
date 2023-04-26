@@ -9,8 +9,6 @@ data:
 {{ include (print .Template.BasePath "/bin/_configure-coreos-ipa.tpl") . | indent 4 }}          
   configure-ironic.sh: |
 {{ include (print .Template.BasePath "/bin/_configure-ironic.sh.tpl") . | indent 4 }}          
-  rundnsmasq: |
-{{ include (print .Template.BasePath "/bin/_rundnsmasq.sh.tpl") . | indent 4 }}          
   configure-httpd-ipa.sh: |
 {{ include (print .Template.BasePath "/bin/_configure-httpd-ipa.sh.tpl") . | indent 4 }}
   coreos-ipa-common.sh: |
@@ -36,5 +34,3 @@ data:
   runironic: |
 {{ include (print .Template.BasePath "/bin/_runironic.tpl") . | indent 4 }}
 {{ (.Files.Glob "ironic-config/*").AsConfig | indent 2 }}          
-
-

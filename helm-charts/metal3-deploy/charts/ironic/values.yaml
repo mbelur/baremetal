@@ -185,9 +185,6 @@ volumeMounts:
   - mountPath: /bin/ironic-common.sh
     name: ironic
     subPath: ironic-common.sh
-  - mountPath: /bin/rundnsmasq
-    name: ironic
-    subPath: rundnsmasq
   - mountPath: /bin/runhttpd
     name: ironic
     subPath: runhttpd
@@ -212,9 +209,6 @@ volumeMounts:
   - mountPath: /bin/tls-common.sh
     name: ironic
     subPath: tls-common.sh
-  - mountPath: /etc/dnsmasq.conf.j2
-    name: ironic
-    subPath: dnsmasq.conf.j2
   - mountPath: /etc/httpd-ironic-api.conf.j2
     name: ironic
     subPath: httpd-ironic-api.conf.j2
@@ -265,6 +259,10 @@ volumes:
     configMapName: ironic-bin
   - name: ironic-ipa-downloader  
     configMapName: ironic-ipa-downloader
+
+dnsmasq_volumes:
+  - name: ironic-dnsmasq
+    configMapName: ironic-dnsmasq
 
 baremetaloperator:
   cacheUrl: "http://cache.ironic.{{ .Values.global.dnsDomain }}/images"
@@ -318,7 +316,17 @@ ironic:
       capabilities:
         add:
           - NET_ADMIN
-          - NET_RAW    
+          - NET_RAW
+    volumeMounts:
+    - mountPath: /bin/ironic-common.sh
+      name: ironic-dnsmasq
+      subPath: ironic-common.sh
+    - mountPath: /bin/rundnsmasq
+      name: ironic-dnsmasq
+      subPath: rundnsmasq
+    - mountPath: /etc/dnsmasq.conf.j2
+      name: ironic-dnsmasq
+      subPath: dnsmasq.conf.j2
   - servname: mariadb
     env:
       - name: MARIADB_PASSWORD

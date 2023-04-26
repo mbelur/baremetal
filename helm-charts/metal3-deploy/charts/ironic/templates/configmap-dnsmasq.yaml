@@ -1,0 +1,15 @@
+{{- if .Values.global.enable_dnsmasq -}}
+---
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: ironic-dnsmasq
+  labels:
+    {{- include "ironic.labels" . | nindent 4 }}
+data:
+  ironic-common.sh: |
+{{ include (print .Template.BasePath "/bin/_ironic-common.sh.tpl") . | indent 4 }}
+  rundnsmasq: |
+{{ include (print .Template.BasePath "/bin/_rundnsmasq.sh.tpl") . | indent 4 }}
+{{ (.Files.Glob "ironic-config/dnsmasq*").AsConfig | indent 2 }}
+{{- end -}}
